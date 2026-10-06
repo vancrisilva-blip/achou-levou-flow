@@ -1,0 +1,32 @@
+name: Testar API Shopee
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/test-shopee.mjs
+      - .github/workflows/shopee-test.yml
+permissions:
+  contents: read
+concurrency:
+  group: shopee-diagnostic
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Testar conexão autenticada
+        env:
+          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
+          SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
+        run: node scripts/test-shopee.mjs
+      - name: Guardar diagnóstico sem credenciais
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shopee-diagnostic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: diagnostics/shopee-status.json
+          retention-days: 3
+          if-no-files-found: warn
