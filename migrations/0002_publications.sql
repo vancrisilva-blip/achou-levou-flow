@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS publications(id INTEGER PRIMARY KEY AUTOINCREMENT,item_id INTEGER NOT NULL,platform TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'AGUARDANDO',external_publication_id TEXT,confirmation_payload TEXT,created_at TEXT DEFAULT CURRENT_TIMESTAMP,confirmed_at TEXT,FOREIGN KEY(item_id) REFERENCES items(id));
+CREATE INDEX IF NOT EXISTS idx_publications_item ON publications(item_id);
