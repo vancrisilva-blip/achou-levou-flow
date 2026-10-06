@@ -11,7 +11,7 @@ export function authorization(appId,secret,timestamp,payload){
 export async function diagnose(env=process.env,request=fetch){
   const report={checkedAt:new Date().toISOString(),status:'not_connected',offerCount:0,availableFields:[],codes:[]};
   const appId=env.SHOPEE_APP_ID?.trim(),secret=env.SHOPEE_APP_SECRET?.trim();
-  if(!appId||!secret)return {...report,status:'missing_credentials'};
+  if(!appId||!secret)return {...report,status:'missing_credentials',missingNames:[...(!appId?['SHOPEE_APP_ID']:[]),...(!secret?['SHOPEE_APP_SECRET']:[])]};
   const payload=JSON.stringify({query:QUERY});
   const timestamp=String(Math.ceil(Date.now()/1000));
   try{
@@ -34,8 +34,9 @@ export async function main(){
   await mkdir('diagnostics',{recursive:true});
   await writeFile('diagnostics/shopee-status.json',JSON.stringify(report,null,2));
   const labels={connected:'Conexão confirmada',missing_credentials:'SHOPEE_APP_ID ou SHOPEE_APP_SECRET ausente',http_error:'Erro HTTP',api_error:'Consulta rejeitada pela API',unexpected_response:'Resposta inesperada',connection_error:'Falha de conexão ou timeout'};
-  const summary=`## Diagnóstico Shopee\n\n${labels[report.status]}\n\nOfertas retornadas: ${report.offerCount}\n\nCampos disponíveis: ${report.availableFields.join(', ')||'nenhum confirmado'}\n\nCódigos de erro: ${report.codes.join(', ')||'nenhum'}\n\nHTTP: ${report.httpStatus||'—'}\n\nNenhum produto ou dado comercial foi publicado. Frete grátis não é confirmado por esta consulta.\n`;
+  const summary=`## Diagnóstico Shopee\n\n${labels[report.status]}\n\nSecrets ausentes: ${(report.missingNames||[]).join(', ')||'nenhum'}\n\nOfertas retornadas: ${report.offerCount}\n\nCampos disponíveis: ${report.availableFields.join(', ')||'nenhum confirmado'}\n\nCódigos de erro: ${report.codes.join(', ')||'nenhum'}\n\nHTTP: ${report.httpStatus||'—'}\n\nNenhum produto ou dado comercial foi publicado. Frete grátis não é confirmado por esta consulta.\n`;
   console.log(labels[report.status]);
+  if(report.missingNames)console.log('Secrets ausentes: '+report.missingNames.join(', '));
   if(process.env.GITHUB_STEP_SUMMARY)await appendFile(process.env.GITHUB_STEP_SUMMARY,summary);
   if(report.status!=='connected')process.exitCode=1;
 }
