@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Testar conexão autenticada
         env:
-          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
+          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID || vars.SHOPEE_APP_ID }}
           SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
         run: node scripts/test-shopee.mjs
       - name: Guardar diagnóstico sem credenciais
