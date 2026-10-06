@@ -2,20 +2,20 @@
 const KEY='achou-levou-plano-b-v1';
 const $=id=>document.getElementById(id);
 let records={},products=[],suggested=null,storageOK=true;
-try{records=JSON.parse(localStorage.getItem(KEY)||'{}');if(!records||Array.isArray(records)||typeof records!=='object')throw Error();}catch{records={};storageOK=false;}
+try{records=validateImport({version:1,records:JSON.parse(localStorage.getItem(KEY)||'{}')});}catch{records={};storageOK=false;}
 const msg=t=>$('message').textContent=t;
 function persist(next){try{localStorage.setItem(KEY,JSON.stringify(next));records=next;storageOK=true;return true;}catch{msg('Não foi possível salvar. Exporte uma cópia antes de fechar.');return false;}}
-function save(id,patch){if(!storageOK){msg('Revisões indisponíveis. Importe uma cópia válida para recuperar os registros.');return false;}const p=products.find(p=>p.id===id);const now=new Date().toISOString();const old=records[id]||{};
+function save(id,patch){if(!storageOK){msg('Revisões indisponíveis. Importe uma cópia válida para recuperar os registros.');return false;}const p=products.find(p=>p.id===id);const now=new Date().toISOString();const old=records[id]||{};const base=patch.fetchedAt&&patch.fetchedAt!==old.fetchedAt?{...old,status:'prepared',shipping:false,draft:'',note:'',copiedFor:''}:old;
 const action=patch.copiedFor?'Mensagem copiada para '+patch.copiedFor:patch.status==='approved'?'Aprovado para copiar':patch.status==='rejected'?'Rejeitado':Object.hasOwn(patch,'shipping')?'Conferência de frete atualizada':'Mensagem editada';
 const history=[...(Array.isArray(old.history)?old.history:[]),{at:now,action}].slice(-50);
-return persist({...records,[id]:{...old,...patch,name:p?.name||old.name||id,link:p?.link||old.link||'',history,updatedAt:now}});}
+return persist({...records,[id]:{...base,...patch,name:p?.name||old.name||id,link:p?.link||old.link||'',history,updatedAt:now}});}
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
 const date=v=>new Date(v).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo'});
 const money=v=>Number.isFinite(v)?v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}):'Sem dados';
 const numeric=p=>Number.isFinite(p.price)&&p.price<=30&&Number.isFinite(p.commission)&&p.commission>=4&&Number.isFinite(p.rating)&&p.rating>=4.8;
 const stale=p=>!Number.isFinite(Date.parse(p.fetchedAt))||Date.now()-Date.parse(p.fetchedAt)>86400000;
 function validLink(v){try{const u=new URL(v);return u.protocol==='https:'&&!u.username&&!u.password&&['shopee.com.br','s.shopee.com.br','collshp.com'].includes(u.hostname);}catch{return false;}}
-function current(p){const r=records[p.id]||{};return r.fetchedAt===p.fetchedAt?r:{status:'prepared',draft:r.draft||''};}
+function current(p){const r=records[p.id]||{};return r.fetchedAt===p.fetchedAt?r:{status:'prepared',draft:''};}
 function initial(p){return p.name+'\n\nPreço a partir de '+money(p.price)+' • consulta em '+date(p.fetchedAt)+'.\nConfira variações, medidas, estoque, preço e frete no anúncio antes de comprar.';}
 function messageFor(p,r){return (r.draft||initial(p)).trim()+'\n\nConfira a oferta:\n'+p.link+'\n\nPublicidade • Posso receber comissão pela compra.';}
 function render(){
@@ -32,13 +32,14 @@ if(p.imageUrl&&/^https:\/\//.test(p.imageUrl)){const img=node('img');img.src=p.i
 c.append(node('p','Preço: '+money(p.price)+' • Comissão estimada: '+money(p.commission)+' • Nota: '+(Number.isFinite(p.rating)?p.rating:'Sem dados')),node('p','Consulta: '+date(p.fetchedAt)+(stale(p)?' • Desatualizado: busque uma consulta nova antes de aprovar.':'')),node('p','Procura: '+(Number.isFinite(p.sales)?p.sales+' vendas informadas pela API (período não informado).':'não verificada.')+' Concorrência: não verificada.'),node('p',numeric(p)?'Atende aos filtros numéricos.':'Não atende aos filtros numéricos.'));
 const a=node('a','Conferir anúncio e frete');a.href=p.link;a.target='_blank';a.rel='noopener noreferrer';c.append(a);
 const check=node('label',undefined,'check'),input=node('input');input.type='checkbox';input.checked=r.shipping===true;check.append(input,node('span','Conferi frete grátis para minha região nesta consulta'));input.onchange=()=>{if(save(p.id,{fetchedAt:p.fetchedAt,shipping:input.checked,status:'prepared'}))render();};c.append(check);
-const label=node('label','Editar mensagem'),edit=node('textarea');edit.value=r.draft||initial(p);edit.maxLength=4000;label.append(edit);c.append(label);edit.onchange=()=>{if(save(p.id,{fetchedAt:p.fetchedAt,draft:edit.value,status:'prepared'})){msg('Edição salva. Revise novamente antes de aprovar.');render();}};
-c.append(node('small','Seu link e o aviso de publicidade são adicionados abaixo e preservados ao copiar.'),node('p',messageFor(p,r)));
+const copyButtons=[];const label=node('label','Editar mensagem'),edit=node('textarea');edit.value=r.draft||initial(p);edit.maxLength=4000;label.append(edit);c.append(label);edit.onchange=()=>{if(save(p.id,{fetchedAt:p.fetchedAt,draft:edit.value,status:'prepared'})){msg('Edição salva. Revise novamente antes de aprovar.');preview.textContent=messageFor(p,current(p));c.querySelector('.badge').textContent='Aguardando revisão';}};
+const preview=node('p',messageFor(p,r));c.append(node('small','Seu link e o aviso de publicidade são adicionados abaixo e preservados ao copiar.'),preview);
 if(r.note)c.append(node('p','Motivo: '+r.note));
-const actions=node('div',undefined,'actions'),approve=node('button','Aprovar para copiar','primary');approve.disabled=stale(p)||r.status==='approved';approve.onclick=()=>{if(!edit.value.trim()){msg('Escreva a mensagem antes de aprovar.');return;}if(save(p.id,{fetchedAt:p.fetchedAt,draft:edit.value,status:'approved',note:''})){msg('Aprovado para cópia manual. Nenhum envio realizado.');render();}};
+const actions=node('div',undefined,'actions'),approve=node('button','Aprovar para copiar','primary');approve.disabled=stale(p)||r.status==='approved';approve.onclick=()=>{if(stale(p)){msg('Atualize o catálogo antes de aprovar.');return;}if(!edit.value.trim()){msg('Escreva a mensagem antes de aprovar.');return;}if(save(p.id,{fetchedAt:p.fetchedAt,draft:edit.value,status:'approved',note:''})){msg('Aprovado para cópia manual. Nenhum envio realizado.');render();}};
 const reject=node('button','Rejeitar');reject.onclick=()=>{const note=prompt('Motivo da rejeição:');if(!note?.trim())return;if(save(p.id,{fetchedAt:p.fetchedAt,status:'rejected',note:note.trim()}))render();};
 actions.append(approve,reject);
-for(const channel of ['Telegram','WhatsApp']){const copy=node('button','Copiar para '+channel);copy.disabled=r.status!=='approved'||stale(p);copy.onclick=async()=>{const text=messageFor(p,current(p));try{await navigator.clipboard.writeText(text);save(p.id,{copiedFor:channel});renderHistory();msg('Mensagem copiada para '+channel+'. Compartilhe manualmente quando desejar.');}catch{const box=node('textarea');box.value=text;box.readOnly=true;box.setAttribute('aria-label','Mensagem para copiar');c.append(box);box.focus();box.select();msg('Selecione e copie a mensagem exibida.');}};actions.append(copy);}
+for(const channel of ['Telegram','WhatsApp']){const copy=node('button','Copiar para '+channel);copy.disabled=r.status!=='approved'||stale(p);copy.onclick=async()=>{if(current(p).status!=='approved'||stale(p)){msg('Revise e aprove a mensagem atual antes de copiar.');return;}const text=messageFor(p,current(p));try{await navigator.clipboard.writeText(text);save(p.id,{copiedFor:channel});renderHistory();msg('Mensagem copiada para '+channel+'. Compartilhe manualmente quando desejar.');}catch{const box=node('textarea');box.value=text;box.readOnly=true;box.setAttribute('aria-label','Mensagem para copiar');c.append(box);box.focus();box.select();msg('Selecione e copie a mensagem exibida.');}};copyButtons.push(copy);actions.append(copy);}
+edit.oninput=()=>{approve.disabled=stale(p);for(const b of copyButtons)b.disabled=true;};
 c.append(actions);list.append(c);
 }}
 async function load(){suggested=null;$('catalog-status').textContent='Carregando…';try{const response=await fetch('./data/shopee-catalog.json',{cache:'no-store'});if(!response.ok)throw Error();const d=await response.json();if(d.version!==1||d.status!=='connected'||!Array.isArray(d.products))throw Error();const seen=new Set();products=d.products.filter(p=>typeof p.id==='string'&&!seen.has(p.id)&&seen.add(p.id)&&typeof p.name==='string'&&validLink(p.link)&&p.source==='shopee_api').slice(0,20);$('catalog-status').textContent=products.length+' ofertas reais • Consulta: '+date(d.fetchedAt)+'.';}catch{products=[];$('catalog-status').textContent='Catálogo indisponível. Atualize as ofertas pelo GitHub.';}render();}
@@ -70,7 +71,7 @@ function showStatus(status){suggested=null;$('status').value=status;$('search').
 $('queue').onclick=()=>showStatus('approved');
 $('pending').onclick=()=>showStatus('prepared');
 $('all').onclick=()=>showStatus('all');
-window.addEventListener('storage',e=>{if(e.key!==KEY)return;try{const next=JSON.parse(e.newValue||'{}');if(!next||typeof next!=='object'||Array.isArray(next))throw Error();records=next;render();}catch{msg('Não foi possível atualizar os registros de outra aba.');}});
+window.addEventListener('storage',e=>{if(e.key!==KEY)return;try{const next=validateImport({version:1,records:JSON.parse(e.newValue||'{}')});records=next;render();}catch{msg('Não foi possível atualizar os registros de outra aba.');}});
 
 if(!storageOK)msg('Não foi possível ler as revisões salvas. Alterações foram bloqueadas.');
 load();
