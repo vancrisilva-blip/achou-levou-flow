@@ -2,6 +2,9 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - scripts/normalize-media.py
+      - .github/workflows/media-repair.yml
   workflow_dispatch:
 permissions:
   contents: read
