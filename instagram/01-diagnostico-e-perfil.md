@@ -45,6 +45,8 @@ Manter `@ach.oulevouofertas`. Trocar agora perderia os links já compartilhados.
 ```
 
 ### Link da bio
+**Pronto:** `https://vancrisilva-blip.github.io/achou-levou-flow/links.html` (página `public/links.html` com Shopee e Mercado Livre; entra no ar depois do merge na `main`).
+
 Trocar o link atual por uma página de links (Linktree, Beacons ou o próprio painel do GitHub Pages) com:
 1. 🔥 Achadinhos de hoje (as 3 a 5 ofertas do dia)
 2. 🏡 Casa e cozinha
