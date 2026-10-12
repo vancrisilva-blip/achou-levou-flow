@@ -1,7 +1,7 @@
 # Modelo de orçamento para o cliente
 
 ---
-**ÁUREA SITES**, Criação de sites para negócios locais
+**ATELIER ÁUREA**, Criação de sites para negócios locais
 CNPJ: [ ] · WhatsApp: [ ] · E-mail: [ ]
 
 **Orçamento nº** [0001] · **Data:** [dd/mm/aaaa] · **Válido até:** [+7 dias]

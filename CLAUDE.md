@@ -10,3 +10,5 @@
 - Publicação ainda é manual (Instagram não conectado ao Metricool/vidIQ).
 - Links de afiliado: Shopee https://br.shp.ee/umhbczgw · Mercado Livre https://www.mercadolivre.com.br/social/cristianevanessa57 · página da bio `public/links.html` (detalhes em `instagram/links-afiliado.md`).
 - Kit oficial da Levin (rosto, movimentos, voz): `instagram/levin/README.md`. Sempre use as referências de lá.
+- Grupo VIP WhatsApp de Achadinhos: https://chat.whatsapp.com/EZ8tsQvltvGK8jl6Ymu0TL (envio manual; a rotina gera a mensagem pronta).
+- Empresa de sites **Atelier Áurea** (nome confirmado pela dona): pasta `empresa-sites/`.
