@@ -28,3 +28,13 @@ Regras:
 🔗 Links de afiliado: posso ganhar comissão sem custo extra pra você.
 ```
 - Horários sugeridos: 12h (oferta do Reel) e 20h (resumo do dia)
+
+## Vitrine e produtos enviados pela dona (12/10/2026)
+| Tipo | Link | Produto |
+|---|---|---|
+| Vitrine de afiliada (collshp) | https://collshp.com/crispv22946?view=storefront | Loja completa: usar na bio e no grupo VIP |
+| Produto | https://s.shopee.com.br/7faXl8aME9 | a identificar (pendente: print ou rede liberada) |
+| Produto | https://s.shopee.com.br/Lnx1pkdEr | a identificar |
+| Produto | https://s.shopee.com.br/9pf2LEccOA | a identificar |
+
+Para a equipe conseguir ler os produtos, a rede do ambiente precisa liberar: `collshp.com`, `s.shopee.com.br`, `shopee.com.br`, `down-br.img.susercontent.com` (fotos).
