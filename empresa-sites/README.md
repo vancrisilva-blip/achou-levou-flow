@@ -1,7 +1,7 @@
 # Empresa de Criação de Sites: plano de negócio
 
 > Projeto **separado** do Instagram Achou Levou. Está nesta pasta até ganhar um repositório próprio.
-> Nome: **Atelier Áurea** (confirmado pela dona em 12/10/2026). Alternativas avaliadas: Áurea Sites, Alpha Sites.
+> Nome: **ALPH** (escolhido pela dona em 12/10/2026; antes: Atelier Áurea).
 
 ## 1. O negócio em uma frase
 **Colocamos na internet, em 7 dias, os negócios locais que ainda não têm site, e depois cuidamos dele todo mês.**

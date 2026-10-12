@@ -30,7 +30,7 @@ Aborde primeiro quem tem **5 pontos ou mais**.
 
 ## Mensagem de abordagem (WhatsApp comercial)
 ```
-Oi, [Nome]! Tudo bem? Sou a [Seu nome], da Atelier Áurea.
+Oi, [Nome]! Tudo bem? Sou a [Seu nome], da ALPH.
 Vi o [Nome do negócio] no Google Maps (avaliações ótimas, parabéns!) e percebi que vocês ainda não têm um site.
 Fiz uma prévia gratuita de como poderia ficar a página de vocês. Posso te mandar? Leva 1 minutinho pra ver 😊
 Se não quiser receber, é só me avisar que não mando mais.
