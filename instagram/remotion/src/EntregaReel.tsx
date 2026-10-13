@@ -1,9 +1,9 @@
 import React from 'react';
-import {AbsoluteFill, Img, OffthreadVideo, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Img, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {loadFont} from '@remotion/fonts';
 
 // Reel "Chegou entrega da Levin!" (15s, 1080x1920, 30fps)
-// Assets em public/: levin-produto.mp4, levin-voz.mp4, omo.jpg, poppins-600/700/800.woff2
+// Assets em public/: levin-sorrindo.jpg, levin-varal.jpg (recortada sem textos), omo.jpg, percarbonato.jpg, poppins-600/700/800.woff2
 const fontFamily = 'Poppins';
 for (const w of ['600', '700', '800']) loadFont({family: fontFamily, url: staticFile(`poppins-${w}.woff2`), weight: w});
 
@@ -81,13 +81,18 @@ const Cena1: React.FC = () => {
 };
 
 // ---------- Cena 2: Levin apresentando (2,5–5,5s) ----------
+// Foto com movimento lento (zoom + pan + leve balanço)
+const KenBurns: React.FC<{src: string; dur: number; from: number; to: number; panY?: number; style?: React.CSSProperties}> = ({src, dur, from, to, panY = 0, style}) => {
+  const f = useCurrentFrame();
+  const sc = interpolate(f, [0, dur], [from, to]);
+  const y = interpolate(f, [0, dur], [0, panY]);
+  const rot = Math.sin(f / 22) * 0.8;
+  return <AbsoluteFill style={{overflow: 'hidden'}}><Img src={staticFile(src)} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `translateY(${y}px) scale(${sc}) rotate(${rot}deg)`, ...style}} /></AbsoluteFill>;
+};
 const Cena2: React.FC = () => {
   const c = useIn(8, 12);
   return (<Fade dur={90}>
-    {/* o clipe tem tarjas pretas em cima/embaixo: ampliar para preencher o quadro */}
-    <AbsoluteFill style={{overflow: 'hidden', background: '#000'}}>
-      <OffthreadVideo src={staticFile('levin-produto.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.27)', transformOrigin: '50% 49.5%'}} />
-    </AbsoluteFill>
+    <KenBurns src="levin-sorrindo.jpg" dur={90} from={1.04} to={1.16} panY={-30} />
     <AbsoluteFill style={{background: 'linear-gradient(180deg,rgba(0,0,0,.25),transparent 25%,transparent 60%,rgba(0,0,0,.5))'}} />
     <div style={{position: 'absolute', top: 1300, width: '100%', textAlign: 'center'}}>
       <div style={{...pill, fontSize: 70, transform: `scale(${c})`}}>Olha o que chegou<br />pra você 👀</div>
@@ -97,10 +102,10 @@ const Cena2: React.FC = () => {
 };
 
 // ---------- Cena 3: produtos saem da caixa (5,5–11s) ----------
-type Prod = {name: string; price: string; img?: string; icon?: string};
+type Prod = {name: string; price: string; img?: string; fit?: 'cover' | 'contain'; icon?: string};
 const PRODS: Prod[] = [
   {name: 'Kit 3 Omo', price: 'R$ 48,20', img: 'omo.jpg'},
-  {name: 'Percarbonato', price: 'R$ 39,90', icon: '🧺'},
+  {name: 'Percarbonato', price: 'R$ 39,90', img: 'percarbonato.jpg', fit: 'contain'},
   {name: 'Adesivos para os pés', price: 'R$ 12,99', icon: '🦶'},
 ];
 const CARD_TOP = 400, CARD_H = 210, CARD_GAP = 36, BOX_TOP = 1230;
@@ -113,7 +118,7 @@ const Card: React.FC<{p: Prod; i: number; delay: number}> = ({p, i, delay}) => {
   return (
     <div style={{position: 'absolute', left: 90, width: 900, top, height: CARD_H, background: '#fff', borderRadius: 44, boxShadow: '0 16px 36px rgba(120,60,20,.22)', display: 'flex', alignItems: 'center', gap: 30, padding: '0 34px', boxSizing: 'border-box', opacity: interpolate(k, [0, 0.15], [0, 1], clamp), transform: `translateY(${ty + arc * (1 - k)}px) scale(${0.25 + 0.75 * k}) rotate(${(1 - k) * (i % 2 ? 14 : -14)}deg)`}}>
       <div style={{width: 160, height: 160, borderRadius: 30, background: '#FFF1E4', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-        {p.img ? <Img src={staticFile(p.img)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /> : <span style={{fontSize: 96}}>{p.icon}</span>}
+        {p.img ? <Img src={staticFile(p.img)} style={{width: '100%', height: '100%', objectFit: p.fit ?? 'cover'}} /> : <span style={{fontSize: 96}}>{p.icon}</span>}
       </div>
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
         <div style={{fontWeight: 800, fontSize: p.name.length > 14 ? 46 : 56, color: DARK, lineHeight: 1.1}}>{p.name}</div>
@@ -148,14 +153,11 @@ const Cena4: React.FC = () => {
   const f = useCurrentFrame();
   const v = useIn(2, 12), c = useIn(14, 8), w = useIn(26, 12);
   const pulse = f > 40 ? 1 + Math.max(0, Math.sin((f - 40) / 5)) * 0.05 : 1;
-  const zoom = interpolate(f, [0, 125], [1.0, 1.08]);
   return (<Fade dur={125} outF={0}>
-    <AbsoluteFill style={{overflow: 'hidden'}}>
-      <OffthreadVideo src={staticFile('levin-voz.mp4')} muted startFrom={24} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(30px) brightness(.75)', transform: 'scale(1.2)'}} />
-    </AbsoluteFill>
+    <KenBurns src="levin-varal.jpg" dur={125} from={1.2} to={1.3} style={{filter: 'blur(30px) brightness(.75)'}} />
     <AbsoluteFill style={{background: `linear-gradient(180deg,rgba(242,107,29,.25),rgba(242,107,29,.55))`}} />
     <div style={{position: 'absolute', left: 60, width: 960, top: 210, height: 860, borderRadius: 48, overflow: 'hidden', border: '8px solid #fff', boxShadow: '0 20px 50px rgba(0,0,0,.35)', transform: `scale(${0.85 + 0.15 * v})`, opacity: v}}>
-      <OffthreadVideo src={staticFile('levin-voz.mp4')} muted startFrom={24} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${zoom})`}} />
+      <KenBurns src="levin-varal.jpg" dur={125} from={1.05} to={1.17} panY={20} style={{objectPosition: '45% 30%'}} />
     </div>
     <div style={{position: 'absolute', top: 1140, width: '100%', textAlign: 'center'}}>
       <div style={{...pill, fontSize: 86, transform: `scale(${c * pulse})`}}>Comenta QUERO</div><br />

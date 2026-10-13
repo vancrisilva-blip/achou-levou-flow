@@ -24,9 +24,11 @@ Para outro produto, troque os textos em `src/OmoReel.tsx` (cenas 1 a 4) e a foto
 
 ## Reel "Chegou entrega" (EntregaReel)
 ```bash
-cp ../levin/ref-segurando-produto.mp4 public/levin-produto.mp4
-cp ../levin/ref-voz-e-movimento.mp4 public/levin-voz.mp4
+cp ../levin/ref-rosto-sorrindo.jpg public/levin-sorrindo.jpg
+ffmpeg -i ../levin/ref-com-produto-varal.jpg -vf crop=1152:925:0:555 public/levin-varal.jpg   # sem os textos da foto
+ffmpeg -i ../../public/assets/corrigidos/percarbonato-tiktok.jpg -vf crop=340:560:685:285 public/percarbonato.jpg
 cp ../midia/omo/produto-omo-kit3.jpg public/omo.jpg
 npx remotion render src/index.ts EntregaReel ../midia/reel-entrega/reel-entrega.mp4 \
   --browser-executable=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --crf=20
 ```
+Não use os vídeos de referência da Levin no Reel (marca d'água do Shopee Video).
