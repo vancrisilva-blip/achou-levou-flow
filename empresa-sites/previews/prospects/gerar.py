@@ -28,7 +28,7 @@ EMPRESAS = [
       bg="#fbf7f6", ink="#3d2b2b", acc="#b07a6e", soft="#efe0dc", hero="#e6c3b8,#b07a6e", cidade="Zona sul · São Paulo"),
  dict(slug="italien-gelato", nome="Italien Gelato", tag="Gelato leggero · ingredientes italianos e brasileiros", emoji="🍨",
       h1="Só leve com você o que for leve.", sub="Gelatos com baixas calorias, pouca gordura e pouco açúcar, com waffle belga e caldas de outro planeta.",
-      cta="Pedir delivery", sec="Experimente", itens=[("Gelatos leggeros","Sabores italianos e brasileiros"),("Waffle belga","O biscoito que acompanha"),("Caldas","De outro planeta"),("Unidades","Encontre a mais perto de você")],
+      cta="Pedir delivery", sec="Sabores", itens=[("Gelatos leggeros","Sabores italianos e brasileiros"),("Waffle belga","O biscoito que acompanha"),("Caldas","De outro planeta"),("Unidades","Encontre a mais perto de você")],
       bg="#f4f7fb", ink="#2a2550", acc="#ff6f91", soft="#e3e3f6", hero="#8ec5fc,#e0c3fc", cidade="São Paulo"),
  dict(slug="alps-clinic", nome="Alps Clinic", tag="Clínica médica de especialidades · Jardins", emoji="🏔️",
       h1="Medicina de especialidades com padrão de excelência.", sub="Clínica de alto padrão nos Jardins, com atendimento personalizado e corpo clínico especializado.",
