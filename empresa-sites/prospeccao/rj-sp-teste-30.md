@@ -45,3 +45,9 @@ Hcor, SAMU, SPDM/Hospital Municipal de Barueri, Zoológico de SP, Sociedade Bras
 2. Equipe monta uma prévia personalizada (print do site de demonstração com o nome da empresa) para cada ✅/🔧.
 3. Contatos: o dataset não traz e-mail/telefone. Opções: (a) pegar WhatsApp/Instagram público na hora da conferência (grátis); (b) enriquecer no Vibe/Hunter (gasta créditos, só com aprovação).
 4. Primeira mensagem: modelo em `../email-prospeccao.md`, resposta para vancrisilva@yahoo.com.br ou WhatsApp (21) 96429-1001.
+
+## Atualização 13/10: busca de contatos
+- Vibe Prospecting: buscamos donos/sócios com e-mail ou telefone nas 13 qualificadas → **0 resultados**. Sem filtro de contato aparecem só 25 funcionários (esteticista, coordenadora, manutenção), não quem decide. **Não gastamos créditos** (continuam 170): pagar por esses contatos não traria ninguém que fecha.
+- Hunter: precisa do domínio do site, e essas empresas não têm. Não se aplica.
+- Busca no Google daqui não encontrou páginas dessas empresas (sinal de que realmente não têm site, mas é preciso confirmar no Google/Instagram do celular).
+- **Caminho que funciona:** contato pelo Instagram/WhatsApp público de cada uma (ex.: @jesuiscopa, @italien_gelato aparecem na própria descrição delas).
