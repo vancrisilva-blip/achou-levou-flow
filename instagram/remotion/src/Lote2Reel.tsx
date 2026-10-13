@@ -22,7 +22,7 @@ const CenaLevin: React.FC = () => {
 
 // ---------- Produto saindo da caixa ----------
 const BOX_TOP = 1180, CARD_TOP = 450, CARD = 800;
-const ProdScene: React.FC<{dur: number; img: string; pos?: string; phrase: React.ReactNode; name: string; price: string}> = ({dur, img, pos = 'center', phrase, name, price}) => {
+export const ProdScene: React.FC<{dur: number; img: string; pos?: string; phrase: React.ReactNode; name: string; price: string}> = ({dur, img, pos = 'center', phrase, name, price}) => {
   const f = useCurrentFrame();
   const h = useIn(2, 12);
   const k = useIn(10, 13, 0.9);
