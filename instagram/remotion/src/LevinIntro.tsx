@@ -2,7 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Sequence, useCurrentFrame} from 'remotion';
 import {DARK, Fade, KenBurns, ORANGE, Tag, pill, useIn, white} from './EntregaReel';
 
-// Reel "Oi, eu sou a Levin" (12s, 1080x1920, 30fps): apresentação que acompanha o carrossel "Quem é a Levin".
+// Reel "Eu sou a Levin" (12s, 1080x1920, 30fps): apresentação que acompanha o carrossel "Quem é a Levin".
 // Assets em public/: levin2.jpg, levin-frente.jpg, levin-sorrindo.jpg, levin-varal.jpg
 const fontFamily = 'Poppins';
 const shade = 'linear-gradient(180deg,rgba(0,0,0,.25),transparent 22%,transparent 55%,rgba(0,0,0,.6))';
@@ -19,7 +19,7 @@ const Cena: React.FC<{dur: number; src: string; pos?: string; from?: number; to?
 const Linha1: React.FC = () => {
   const a = useIn(6, 11), b = useIn(20, 12);
   return (<>
-    <div style={{...pill, fontSize: 80, transform: `scale(${a}) rotate(${(1 - a) * -6}deg)`}}>Oi! Eu sou a Levin 🧡</div><br />
+    <div style={{...pill, fontSize: 80, transform: `scale(${a}) rotate(${(1 - a) * -6}deg)`}}>Eu sou a Levin 🧡</div><br />
     <div style={{...white, fontSize: 50, marginTop: 28, opacity: b, transform: `translateY(${(1 - b) * 40}px)`}}>sua garimpeira de achadinhos</div>
   </>);
 };

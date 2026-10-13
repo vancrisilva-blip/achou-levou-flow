@@ -1,4 +1,4 @@
-REEL "Oi, eu sou a Levin" · 12s · reel.mp4 + capa.jpg · gerado em 13/10/2026 (composição LevinIntro)
+REEL "Eu sou a Levin" · 12s · reel.mp4 + capa.jpg · gerado em 13/10/2026 (composição LevinIntro)
 Combina com o carrossel "Quem é a Levin". Sem áudio: escolher música animada em alta no app, volume baixo. Ativar "Informações de IA".
 
 LEGENDA:
