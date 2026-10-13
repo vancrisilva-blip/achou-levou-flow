@@ -49,3 +49,10 @@ Até a voz ser clonada, a equipe gera os vídeos com fala por um modelo que já 
 - A Levin é gerada por IA: rótulo "Informações de IA" ativado e "Levin é personagem virtual" na legenda
 - Não usar a voz ou o rosto de uma pessoa real sem autorização
 - Os vídeos de referência têm marca d'água do Shopee Video (@crispv22). Não reposte esses arquivos no Instagram; use só como referência
+
+## Imagens aprovadas pela dona
+| Data | Imagem | Uso |
+|---|---|---|
+| 13/10/2026 | Levin segurando o Kit 3 Omo (Weave / Nano Banana Pro): https://media.weavy.ai/image/upload/v1791853622/uploads/bWK0uTxDU0Oakzi5DQeuNnO1Ouz1/rnmmtxkkctwl4lk0shlk.png | **Rosto aprovado.** Usar como primeiro quadro do vídeo falando do Omo e como base de rosto para os próximos produtos |
+
+Receita que funcionou (11 créditos do Weave): Nano Banana Pro, 9:16, 2K, imagens `ref-frente-fundo-neutro.jpg` + foto do produto, prompt "SAME young Brazilian woman from the first image... holding the product from the second image... labels facing the camera".
