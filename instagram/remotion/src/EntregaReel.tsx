@@ -7,29 +7,29 @@ import {loadFont} from '@remotion/fonts';
 const fontFamily = 'Poppins';
 for (const w of ['600', '700', '800']) loadFont({family: fontFamily, url: staticFile(`poppins-${w}.woff2`), weight: w});
 
-const ORANGE = '#F26B1D', DARK = '#3A2A20', CREAM = '#FFF6EC';
-const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
-const pill: React.CSSProperties = {display: 'inline-block', background: ORANGE, color: '#fff', fontWeight: 800, fontSize: 84, lineHeight: 1.1, padding: '24px 44px', borderRadius: 34, boxShadow: '0 9px 0 #C4500C'};
-const white: React.CSSProperties = {display: 'inline-block', background: '#fff', color: DARK, fontWeight: 800, fontSize: 58, lineHeight: 1.15, padding: '18px 34px', borderRadius: 26, boxShadow: '0 6px 20px rgba(0,0,0,.15)'};
+export const ORANGE = '#F26B1D', DARK = '#3A2A20', CREAM = '#FFF6EC';
+export const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
+export const pill: React.CSSProperties = {display: 'inline-block', background: ORANGE, color: '#fff', fontWeight: 800, fontSize: 84, lineHeight: 1.1, padding: '24px 44px', borderRadius: 34, boxShadow: '0 9px 0 #C4500C'};
+export const white: React.CSSProperties = {display: 'inline-block', background: '#fff', color: DARK, fontWeight: 800, fontSize: 58, lineHeight: 1.15, padding: '18px 34px', borderRadius: 26, boxShadow: '0 6px 20px rgba(0,0,0,.15)'};
 
-const useIn = (delay = 0, damping = 12, mass = 0.8) => {
+export const useIn = (delay = 0, damping = 12, mass = 0.8) => {
   const f = useCurrentFrame(); const {fps} = useVideoConfig();
   return spring({frame: f - delay, fps, config: {damping, mass}});
 };
-const Fade: React.FC<{children: React.ReactNode; dur: number; inF?: number; outF?: number}> = ({children, dur, inF = 8, outF = 8}) => {
+export const Fade: React.FC<{children: React.ReactNode; dur: number; inF?: number; outF?: number}> = ({children, dur, inF = 8, outF = 8}) => {
   const f = useCurrentFrame();
   const a = inF ? interpolate(f, [0, inF], [0, 1], clamp) : 1;
   const b = outF ? interpolate(f, [dur - outF, dur], [1, 0], clamp) : 1;
   const o = Math.min(a, b);
   return <AbsoluteFill style={{opacity: o}}>{children}</AbsoluteFill>;
 };
-const Tag: React.FC<{dark?: boolean}> = ({dark}) => (
+export const Tag: React.FC<{dark?: boolean}> = ({dark}) => (
   <div style={{position: 'absolute', top: 1610, width: '100%', textAlign: 'center', fontWeight: 700, fontSize: 40, color: dark ? DARK : '#fff', textShadow: dark ? 'none' : '0 2px 8px rgba(0,0,0,.7)'}}>@ach.oulevouofertas</div>
 );
-const CreamBg: React.FC = () => <AbsoluteFill style={{background: `radial-gradient(circle at 50% 40%, #FFFFFF 0%, ${CREAM} 45%, #FFD9B8 100%)`}} />;
+export const CreamBg: React.FC = () => <AbsoluteFill style={{background: `radial-gradient(circle at 50% 40%, #FFFFFF 0%, ${CREAM} 45%, #FFD9B8 100%)`}} />;
 
 // ---------- Caixa de papelão (CSS) ----------
-const Box: React.FC<{w: number; open: number}> = ({w, open}) => {
+export const Box: React.FC<{w: number; open: number}> = ({w, open}) => {
   const h = w * 0.68, flapH = w * 0.2;
   const brown = 'linear-gradient(180deg,#D49A5C,#B97A3E)';
   const flap: React.CSSProperties = {position: 'absolute', top: -flapH, width: w / 2, height: flapH, background: 'linear-gradient(180deg,#E0AA6E,#C88A4C)', border: '4px solid #8E5A28', boxSizing: 'border-box'};
@@ -52,7 +52,7 @@ const Box: React.FC<{w: number; open: number}> = ({w, open}) => {
 };
 
 // ---------- Cena 1: caixa cai e abre (0–2,5s) ----------
-const Cena1: React.FC = () => {
+export const Cena1: React.FC = () => {
   const f = useCurrentFrame();
   const drop = useIn(2, 7, 0.9);
   const y = interpolate(drop, [0, 1], [-1400, 0]);
@@ -82,7 +82,7 @@ const Cena1: React.FC = () => {
 
 // ---------- Cena 2: Levin apresentando (2,5–5,5s) ----------
 // Foto com movimento lento (zoom + pan + leve balanço)
-const KenBurns: React.FC<{src: string; dur: number; from: number; to: number; panY?: number; style?: React.CSSProperties}> = ({src, dur, from, to, panY = 0, style}) => {
+export const KenBurns: React.FC<{src: string; dur: number; from: number; to: number; panY?: number; style?: React.CSSProperties}> = ({src, dur, from, to, panY = 0, style}) => {
   const f = useCurrentFrame();
   const sc = interpolate(f, [0, dur], [from, to]);
   const y = interpolate(f, [0, dur], [0, panY]);

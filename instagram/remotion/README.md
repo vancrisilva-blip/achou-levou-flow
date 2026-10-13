@@ -32,3 +32,13 @@ npx remotion render src/index.ts EntregaReel ../midia/reel-entrega/reel-entrega.
   --browser-executable=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --crf=20
 ```
 Não use os vídeos de referência da Levin no Reel (marca d'água do Shopee Video).
+
+## Reel "Lote 2" (Lote2Reel: espremedor de alho + limpa tênis)
+```bash
+cp ../levin/ref-rosto-sorrindo-2.jpg public/levin2.jpg
+cp ../produtos/2026-10-13-lote-2/fotos/espremedor-uso.jpg public/
+cp ../produtos/2026-10-13-lote-2/fotos/limpa-tenis-diferenca.jpg public/limpa-diferenca.jpg
+npx remotion render src/index.ts Lote2Reel ../midia/reel-lote-2/reel.mp4 \
+  --browser-executable=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --crf=20
+```
+Reaproveita a caixa (Box), a Cena 1 e o KenBurns exportados de `src/EntregaReel.tsx`. A capa é gerada por `../midia/reel-lote-2/render-capa.cjs` (Playwright).
