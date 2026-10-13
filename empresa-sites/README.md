@@ -1,7 +1,7 @@
 # Empresa de Criação de Sites: plano de negócio
 
 > Projeto **separado** do Instagram Achou Levou. Está nesta pasta até ganhar um repositório próprio.
-> Nome: **ALPH** (escolhido pela dona em 12/10/2026; antes: Atelier Áurea).
+> Nome: **Yaveh** (escolhido pela dona em 13/10/2026; antes: ALPH e Atelier Áurea). Logo em fonte de estilo hebraico (Frank Ruhl Libre), dourado.
 
 ## 1. O negócio em uma frase
 **Colocamos na internet, em 7 dias, os negócios locais que ainda não têm site, e depois cuidamos dele todo mês.**
@@ -70,5 +70,5 @@ Base: preço médio de R$ 900 por site + R$ 97/mês por cliente no plano. É uma
 ## Atualização 13/10/2026
 - WhatsApp comercial: **(21) 96429-1001** (já no site, botões verdes) · e-mail de respostas: vancrisilva@yahoo.com.br
 - Praças iniciais: **Rio de Janeiro e São Paulo**
-- Domínio: `alph.com.br` **está ocupado**; `alphp.com.br` **está livre** (recomendado: registrar no registro.br, cerca de R$ 40/ano). Outras livres: alphsites.com.br, alphweb.com.br, alphdigital.com.br, alphsites.com (≈ US$ 11–13/ano)
+- Domínio: `yaveh.com.br` e `yaveh.com` **estão ocupados**. Livres: **yavehsites.com.br** (recomendado, cerca de R$ 40/ano no registro.br), yavehdigital.com.br, yavehweb.com.br, yavehsites.com (≈ US$ 13/ano)
 - Base de prospecção (Vibe Prospecting, prévia grátis): **151.275 empresas sem site no RJ e SP** nos nichos beleza, saúde, moda e alimentação, com 1 a 50 funcionários. A base tem ruído (aparecem marcas grandes com o site mal cadastrado), então cada contato precisa ser conferido no Google Maps antes da abordagem

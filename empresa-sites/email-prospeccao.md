@@ -1,4 +1,4 @@
-# E-mails de prospecção da ALPH (respostas vão para vancrisilva@yahoo.com.br)
+# E-mails de prospecção da Yaveh (respostas vão para vancrisilva@yahoo.com.br)
 
 > Mandar **um por um**, personalizado, no máximo 20 a 30 por dia. Só para e-mails comerciais públicos. Sempre com a opção de não receber mais.
 
@@ -7,7 +7,7 @@
 
 Olá, {{Nome}}! Tudo bem?
 
-Sou a Vanessa, da ALPH. Encontrei o **{{Nome do negócio}}** no Google Maps ({{X}} avaliações, parabéns!) e percebi que vocês ainda não têm um site.
+Sou a Vanessa, da Yaveh. Encontrei o **{{Nome do negócio}}** no Google Maps ({{X}} avaliações, parabéns!) e percebi que vocês ainda não têm um site.
 
 Hoje, quando alguém procura "{{nicho}} em {{bairro}}", quem tem site aparece primeiro e passa mais confiança.
 
@@ -17,10 +17,10 @@ Se gostar, coloco no ar em **7 dias**, com botão de WhatsApp, mapa e versão pa
 
 Posso te mandar mais detalhes?
 
-Vanessa · ALPH, sites para negócios locais
+Vanessa · Yaveh, sites para negócios locais
 vancrisilva@yahoo.com.br
 
-_Se não quiser receber mais e-mails da ALPH, é só responder "parar"._
+_Se não quiser receber mais e-mails da Yaveh, é só responder "parar"._
 
 ## E-mail 2: lembrete (3 dias depois, só para quem não respondeu)
 **Assunto:** Re: Uma prévia do site do {{Nome do negócio}}
