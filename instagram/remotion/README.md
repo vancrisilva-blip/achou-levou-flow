@@ -21,3 +21,12 @@ Para outro produto, troque os textos em `src/OmoReel.tsx` (cenas 1 a 4) e a foto
 - A fonte vem do pacote `@fontsource/poppins`, porque a internet do ambiente bloqueia o Google Fonts dentro do render
 - O vídeo sai sem som: coloque um áudio em alta no app do Instagram
 - O Remotion é gratuito para uso individual e para empresas pequenas
+
+## Reel "Chegou entrega" (EntregaReel)
+```bash
+cp ../levin/ref-segurando-produto.mp4 public/levin-produto.mp4
+cp ../levin/ref-voz-e-movimento.mp4 public/levin-voz.mp4
+cp ../midia/omo/produto-omo-kit3.jpg public/omo.jpg
+npx remotion render src/index.ts EntregaReel ../midia/reel-entrega/reel-entrega.mp4 \
+  --browser-executable=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell --crf=20
+```
