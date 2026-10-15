@@ -3,6 +3,7 @@
 | Produto | Preço | Link de afiliado |
 |---|---|---|
 | Kit 15/30/45 pçs Mini Foto (cabe na capinha de celular) | AGUARDANDO a dona (não inventar) | https://s.shopee.com.br/9KipzNC7MF |
+| Porta-retrato com base de madeira e vidro duplo, personalizado (presente romântico/decorativo) | AGUARDANDO a dona | LINK INCOMPLETO (veio só https://s.shopee.com.br/) |
 
 - Link não verificado: a rede desta sessão bloqueia a Shopee.
 - Faltam: preço de cada opção (15, 30 e 45 peças) e fotos do anúncio sem logo de loja.
