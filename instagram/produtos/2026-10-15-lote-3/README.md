@@ -4,6 +4,8 @@
 |---|---|---|
 | Kit 15/30/45 pçs Mini Foto (cabe na capinha de celular) | AGUARDANDO a dona (não inventar) | https://s.shopee.com.br/9KipzNC7MF |
 | Porta-retrato com base de madeira e vidro duplo, personalizado (presente romântico/decorativo) | AGUARDANDO a dona | LINK INCOMPLETO (veio só https://s.shopee.com.br/) |
+| Escova de limpeza 4 em 1 com dispenser de detergente (panelas, louças, pia) | R$ 29,59 (informado em 15/10) | https://s.shopee.com.br/5fpXgQJD9Q |
+| Leve Brisa anti-mofo odorizante (kits de 1, 3, 6, 9 e 12 unidades) | a partir de R$ 7,99 (informado em 15/10; conferir qual kit) | https://s.shopee.com.br/30omVlrte7 |
 | Espelho Flame com moldura em couro (100x35 · 90x40 · 70x30 · 50x25), hall/sala/closet | AGUARDANDO a dona (preço por tamanho) | https://s.shopee.com.br/7Kxlbxv7zV |
 
 - Link não verificado: a rede desta sessão bloqueia a Shopee.
