@@ -107,3 +107,13 @@ export const limpaTenis: ProdutoProps = {
   pontos: ['remove manchas difíceis', 'espuma ativa', 'renova e clareia'],
   palavra: 'TÊNIS', dataPreco: '13/10',
 };
+
+export const escova: ProdutoProps = {
+  gancho: ['Lavar panela sem', 'encostar na gordura? 🍳'],
+  frase: ['Aperta e o', 'detergente sai'],
+  nome: 'Escova 4 em 1', preco: 'R$ 29,59',
+  foto: 'escova-aperte-limpe.jpg', fotoPos: '50% 50%',
+  fotoDetalhe: 'escova-4-cabecas.jpg', detalheTitulo: 'Vem com 4 cabeças 🔄',
+  pontos: ['detergente no cabo', 'esponja, cerdas e mais', 'ainda pendura'],
+  palavra: 'ESCOVA', dataPreco: '15/10',
+};
