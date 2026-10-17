@@ -1,0 +1,164 @@
+<title>Assistente Levin</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700&display=swap">
+<style>
+/* Layout: uma coluna de conversa, barra da marca no topo, atalhos e caixa de texto fixa embaixo */
+:root{
+  --bg:#FFF6EC; --surface:#FFFFFF; --ink:#3A2A20; --muted:#8A7262;
+  --brand:#F26B1D; --brand-ink:#FFFFFF; --bubble:#FFE6D2; --line:#F1DCC9;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1E1612; --surface:#2A201A; --ink:#F6E9DD; --muted:#B79C88;
+  --brand:#FF8A45; --brand-ink:#1E1612; --bubble:#3B2A1F; --line:#3E2F25; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1E1612; --surface:#2A201A; --ink:#F6E9DD; --muted:#B79C88;
+  --brand:#FF8A45; --brand-ink:#1E1612; --bubble:#3B2A1F; --line:#3E2F25; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body)}
+.app{height:100%;display:flex;flex-direction:column;max-width:760px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{display:flex;align-items:center;gap:12px;padding-block:14px;border-bottom:1px solid var(--line)}
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--brand);color:var(--brand-ink);
+  display:grid;place-items:center;font:800 22px var(--display);flex:none}
+header h1{margin:0;font:800 22px/1.1 var(--display);text-wrap:balance}
+header p{margin:0;color:var(--muted);font-size:13px}
+.new{margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;
+  padding:6px 12px;font:600 13px var(--body);cursor:pointer}
+#log{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-block:16px;min-height:0}
+.msg{max-width:88%;padding:10px 14px;border-radius:18px;white-space:pre-wrap;word-wrap:break-word;min-width:0}
+.me{align-self:flex-end;background:var(--brand);color:var(--brand-ink);border-bottom-right-radius:6px}
+.bot{align-self:flex-start;background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:6px}
+.bot.example{border-style:dashed}
+.tag{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.copy{margin-top:8px;background:var(--bubble);color:var(--ink);border:0;border-radius:999px;padding:4px 12px;
+  font:600 12px var(--body);cursor:pointer}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-block:8px}
+.chips button{flex:none;background:var(--bubble);color:var(--ink);border:0;border-radius:999px;padding:8px 14px;
+  font:600 13px var(--body);cursor:pointer}
+form{display:flex;gap:8px;align-items:flex-end;padding-block:8px 14px}
+textarea{flex:1;min-width:0;resize:none;max-height:160px;background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);border-radius:18px;padding:10px 14px;font:16px/1.4 var(--body)}
+.send{background:var(--brand);color:var(--brand-ink);border:0;border-radius:999px;padding:11px 18px;
+  font:800 15px var(--display);cursor:pointer}
+.send:disabled{opacity:.5;cursor:default}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.note{color:var(--muted);font-size:12px;text-align:center;padding-bottom:8px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="app">
+  <header>
+    <div class="avatar" aria-hidden="true">L</div>
+    <div><h1>Assistente Levin</h1><p>Legendas, roteiros, respostas de DM e mensagens do grupo VIP</p></div>
+    <button class="new" id="novo" type="button">Nova conversa</button>
+  </header>
+
+  <div id="log" aria-live="polite">
+    <div class="msg bot example"><span class="tag">Exemplo</span>A Levin achou! 🧡
+Me conta o produto, o preço e o link que eu monto a legenda, o roteiro do Reel ou a mensagem do grupo VIP.
+
+Eu nunca invento preço nem cupom: se faltar algum dado, eu pergunto.</div>
+  </div>
+
+  <div class="chips" id="chips">
+    <button type="button" data-p="Escreva a legenda de um carrossel para este produto (nome, preço e link vou colar abaixo):&#10;">Legenda de carrossel</button>
+    <button type="button" data-p="Escreva o roteiro de um Reel de 15 segundos com gancho forte para este produto:&#10;">Roteiro de Reel</button>
+    <button type="button" data-p="Responda esta DM de seguidora no jeito da Levin:&#10;">Responder DM</button>
+    <button type="button" data-p="Escreva a mensagem do grupo VIP de WhatsApp com estas ofertas:&#10;">Mensagem do grupo VIP</button>
+    <button type="button" data-p="Me dê 5 ganchos para Reel sobre este produto:&#10;">5 ganchos</button>
+  </div>
+
+  <form id="f">
+    <textarea id="box" rows="2" placeholder="Escreva para a Levin… (ex.: legenda para a escova 4 em 1, R$ 29,59)"></textarea>
+    <button class="send" id="enviar" type="submit">Enviar</button>
+  </form>
+  <p class="note" id="nota">Responde com a sua conta do Claude. Revise antes de postar.</p>
+</div>
+
+<script>
+const RULES = `Você é a Levin, apresentadora virtual do Instagram @ach.oulevouofertas (achadinhos da Shopee e do Mercado Livre: casa, cozinha, limpeza, beleza). Você ajuda a dona do perfil a escrever legendas, roteiros de Reels e Stories, respostas de DM e comentários, e mensagens do grupo VIP de WhatsApp.
+
+Jeito de falar: amiga animada, calorosa, português do Brasil, frases curtas, pouco emoji.
+Bordões (use quando couber): abertura "A Levin achou! 🧡"; veredito "Vale ou não vale? VALE!" ou "Esse eu não levaria, e te digo por quê"; fechamento "Achou, gostou? Levou! Comenta QUERO que eu te mando o link."
+
+Regras que nunca podem ser quebradas:
+1. Nunca invente preço, cupom, desconto, frete, avaliação, número de vendas ou métrica. Use só o que a dona escreveu. Se faltar, deixe [PREÇO] ou [LINK] e diga o que falta.
+2. Toda legenda de post termina com a linha: 🔗 Link de afiliado · Levin é personagem virtual
+3. No máximo 5 hashtags por post.
+4. Não prometa resultado milagroso nem diga que a Levin é uma pessoa real ou que usou o produto de verdade.
+5. Não sugira comprar seguidores, curtidas ou automação proibida pelo Instagram.
+Links oficiais (use só se a dona pedir): bio com todos os links; grupo VIP https://chat.whatsapp.com/EZ8tsQvltvGK8jl6Ymu0TL
+
+Responda já com o texto pronto para copiar, sem explicar o que vai fazer. Se a dona pedir opções, numere.`;
+
+const log = document.getElementById('log'), box = document.getElementById('box'),
+      btn = document.getElementById('enviar'), nota = document.getElementById('nota');
+let turns = [], sample = null, busy = false;
+
+const ERROS = {
+  not_granted:'A página não tem permissão para usar o Claude. Libere no menu de permissões do artefato.',
+  sampling_disabled:'O Claude não está disponível nesta conta.',
+  rate_limited:'Muitos pedidos seguidos. Espere um pouco e tente de novo.',
+  session_expired:'Sua sessão expirou. Entre de novo no Claude.',
+  refused:'Esse pedido não pôde ser respondido. Tente escrever de outro jeito.',
+  empty_completion:'A resposta veio vazia. Tente pedir de forma mais simples.'
+};
+
+function bubble(cls, text){
+  const d = document.createElement('div'); d.className = 'msg ' + cls; d.textContent = text;
+  log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+}
+function addCopy(d, text){
+  const b = document.createElement('button'); b.type='button'; b.className='copy'; b.textContent='Copiar';
+  b.onclick = async () => {
+    try { await navigator.clipboard.writeText(text); b.textContent='Copiado'; }
+    catch { const r=document.createRange(); r.selectNodeContents(d.firstChild||d);
+            const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent='Selecionado, copie'; }
+    setTimeout(()=>b.textContent='Copiar',2000);
+  };
+  d.appendChild(document.createElement('br')); d.appendChild(b);
+}
+
+async function enviar(text){
+  if (busy || !text.trim()) return;
+  if (!sample){ nota.textContent = 'A assistente só responde dentro do Claude (abra pelo link do artefato).'; return; }
+  busy = true; btn.disabled = true;
+  bubble('me', text); turns.push({role:'user', content:text});
+  const out = bubble('bot', 'Pensando…');
+  try {
+    const keep = turns.slice(-12);
+    if (keep[0].role !== 'user') keep.shift();
+    const { text: resp } = await sample([{role:'user', content:RULES}, ...keep], {
+      cache:false, onText:({text}) => { out.textContent = text; log.scrollTop = log.scrollHeight; }
+    });
+    out.textContent = resp; addCopy(out, resp);
+    turns.push({role:'assistant', content:resp});
+  } catch(e){
+    out.textContent = e.text || '';
+    if (!e.text) out.remove();
+    turns.pop();
+    if (e.code !== 'cancelled') nota.textContent = ERROS[e.code] || 'Falhou a conexão. Tente de novo.';
+  } finally { busy = false; btn.disabled = false; box.focus(); }
+}
+
+document.getElementById('f').addEventListener('submit', e => {
+  e.preventDefault(); const t = box.value; box.value = ''; enviar(t);
+});
+box.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); document.getElementById('f').requestSubmit(); }
+});
+document.getElementById('chips').addEventListener('click', e => {
+  const p = e.target.closest('button')?.dataset.p; if (!p) return;
+  box.value = p; box.focus(); box.setSelectionRange(p.length, p.length);
+});
+document.getElementById('novo').onclick = () => {
+  turns = []; [...log.querySelectorAll('.msg:not(.example)')].forEach(n => n.remove());
+  nota.textContent = 'Responde com a sua conta do Claude. Revise antes de postar.';
+};
+
+(window.claude?.use ? window.claude.use('sample') : Promise.resolve(null))
+  .then(s => { sample = s; if (!s) nota.textContent = 'A assistente só responde dentro do Claude (abra pelo link do artefato).'; })
+  .catch(() => {});
+</script>
